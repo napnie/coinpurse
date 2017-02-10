@@ -3,10 +3,11 @@ package coinpurse;
 /**
  * A main class to create objects and connect objects together.
  * The user interface needs a reference to coin purse.
+ * 
  * @author Nitith Chayakul
+ * @version 2017.02.10
  */
 public class Main {
-	private static int CAPACITY = 10;
 	
     /**
      * Configure and start the application.
@@ -14,10 +15,10 @@ public class Main {
      */
     public static void main( String[] args ) {
         // 1. create a Purse
-    	Purse purse = new Purse(CAPACITY);
+    	Purse purse = new Purse(10);
         // 2. create a ConsoleDialog with a reference to the Purse object
-    	ConsoleDialog console = new ConsoleDialog(purse);
+    	ConsoleDialog ui = new ConsoleDialog(purse);
         // 3. run the ConsoleDialog
-    	console.run();
+    	ui.run();
     }
 }

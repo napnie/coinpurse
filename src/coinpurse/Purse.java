@@ -12,8 +12,7 @@ import java.util.Collections;
  *  coins to remove.
  *  
  *  @author Nitith Chayakul
- *  @since Feb 10, 2017
- *  @version Feb 10, 2017
+ *  @version 2017.02.10
  */
 public class Purse {
     /** Collection of objects in the purse. */
@@ -134,7 +133,7 @@ public class Purse {
      * @return String representation of the purse
      */
     public String toString() {
-    	DecimalFormat numFormat = new DecimalFormat("0.#");
+    	DecimalFormat numFormat = new DecimalFormat("0.##");
     	return String.format("%d coins with value %s",money.size(), numFormat.format(this.getBalance()) );
     }
 

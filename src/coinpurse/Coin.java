@@ -1,12 +1,13 @@
 package coinpurse;
 
 import java.text.DecimalFormat;
+import java.util.Comparator;
 
 /**
  * A coin with a monetary value and currency.
+ * 
  * @author Nitith Chayakul
- * @since Feb 10, 2017
- * @version Feb 10, 2017
+ * @version 2017.02.10
  */
 public class Coin implements Comparable<Coin> {
 
@@ -64,7 +65,7 @@ public class Coin implements Comparable<Coin> {
      * Compare order of the coin.
      * @param other is other coin to compare
      * @return order of the object : negative if this value is less than coin or other coin is null, positive if this value is more than coin
-     *     , zero if their value is the same
+     * 		, zero if their value is the same
      */
     @Override
     public int compareTo(Coin other){
@@ -81,8 +82,9 @@ public class Coin implements Comparable<Coin> {
      */
     @Override
     public String toString(){
-    	DecimalFormat numFormat = new DecimalFormat("0.#");
+    	DecimalFormat numFormat = new DecimalFormat("0.##");
     	return String.format("%s %s",numFormat.format(value),currency);
     }
+
     
 }

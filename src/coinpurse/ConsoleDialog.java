@@ -7,8 +7,9 @@ import java.util.Scanner;
  * This class provides simple interactive dialog for inserting
  * and removing money to/from the purse, and displaying the
  * balance.
+ * 
  * @author Nitith Chayakul
- * @since Feb 10, 2017
+ * @version 2017.02.10
  */
 public class ConsoleDialog {
 	// default currency for this dialog
@@ -16,7 +17,6 @@ public class ConsoleDialog {
     // use a single java.util.Scanner object for reading all input
     private static Scanner console = new Scanner( System.in );
     
-	//TODO How does this object get a Purse?  DO NOT WRITE "new Purse(xx)".
     private Purse purse;
     
     /** 
