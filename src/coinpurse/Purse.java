@@ -120,9 +120,10 @@ public class Purse {
 		// and return them as an array.
 		// Use list.toArray( array[] ) to copy a list into an array.
 		// toArray returns a reference to the array itself.
-		for (int i=0 ; i<money.size() ; i++){
+		for (int i=0 ; i<tampoWithdraw.size() ; i++){
 			money.remove( tampoWithdraw.get(i) );
 		}
+		Collections.sort(money);
 		Coin[] array = new Coin[tampoWithdraw.size()];
         return tampoWithdraw.toArray(array);
 	}
