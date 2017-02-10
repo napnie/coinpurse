@@ -8,16 +8,17 @@ import org.junit.Test;
 
 /**
  * Test the Purse.
- * This is a JUnit test.  If you don't know how to use this, just ignore it.
- * @author  Nitith Chayakul
- * @version 2015.01.20
+ * This is a JUnit 4 test.  
+ * To run these tests, right click on this file (in Navigator pane)
+ * and choose Run As -> JUnit test
+ * @author  Resident Evil
+ * @version 2017.02.01
  */
 public class PurseTest {
 	/** tolerance for comparing two double values */
 	private static final double TOL = 1.0E-6;
     /**
      * Sets up the test fixture.
-     *
      * Called before every test case method.
      */
     @Before
@@ -25,16 +26,7 @@ public class PurseTest {
     {
     }
 
-    /**
-     * Tears down the test fixture.
-     *
-     * Called after every test case method.
-     */
-    @After
-    public void tearDown()
-    {
-    }
-
+    /** Easy test that the Purse constructor is working. */
     @Test
     public void testConstructor()
     {
@@ -44,20 +36,32 @@ public class PurseTest {
         assertEquals(0, purse.count());
     }
 
+    
+
+    /** Insert some coins. Easy test. */
     @Test
     public void testInsert()
     {
         Purse purse = new Purse(3);
         Coin coin1 = new Coin(5);
         Coin coin2 = new Coin(10);
-        Coin fakeCoin = new Coin(0);
-        Coin oneBaht = new Coin(1);
+        Coin coin3 = new Coin(1);
         assertTrue( purse.insert(coin1));
-		assertFalse( purse.isFull() );
-        assertFalse(  purse.insert(fakeCoin));
-        assertTrue( purse.insert(oneBaht));
+        assertTrue( purse.insert(coin3));
         assertTrue( purse.insert(coin2));
         assertEquals( 3, purse.count() );
+        // purse is full so insert should fail
+        assertFalse( purse.insert(new Coin(1)) );
+    }
+    
+
+    /** Insert should reject coin with no value. */
+    @Test
+    public void testInsertNoValue()
+    {
+        Purse purse = new Purse(3);
+        Coin fakeCoin = new Coin(0);
+        assertFalse( purse.insert(fakeCoin));
     }
 
 
@@ -68,7 +72,7 @@ public class PurseTest {
         assertFalse( purse.isFull() );
         purse.insert( new Coin(1) );
         assertTrue( purse.isFull() );
-        // harder test
+        // real test
         int capacity = 4;
         purse = new Purse(capacity);
         for(int k=1; k<=capacity; k++) {
@@ -86,16 +90,17 @@ public class PurseTest {
 	@Test
 	public void testInsertSameCoin()
 	{
-		Purse purse = new Purse(3);
-		Coin coin = new Coin(1000000);
-		assertTrue(purse.insert(coin) );
-		assertTrue(purse.insert(coin) ); // should be allowed
+		Purse purse = new Purse(5);
+		Coin coin = new Coin(10);
+		assertTrue( purse.insert(coin) );
+		assertTrue( purse.insert(coin) ); // should be allowed
+		assertTrue( purse.insert(coin) ); // should be allowed
 	}
 
 	@Test
 	public void testEasyWithdraw() {
 		Purse purse = new Purse(10);
-		int [] values = {1, 10, 1000000};
+		int [] values = {1, 10, 1000};
 		for(int value : values) {
 			Coin coin = new Coin(value);
 			assertTrue(purse.insert(coin));
@@ -112,20 +117,20 @@ public class PurseTest {
 	public void testMultiWithdraw() {
 		Purse purse = new Purse(10);
 		int value = 1;
-		int amount1 = 0;
-		int amount2 = 0;
+		double amount1 = 0;
+		double amount2 = 0;
 		for(int k=1; k<10; k=k+2)  {
-			assertTrue( purse.insert(new Coin(value)) );
+			assertTrue( purse.insert( new Coin(value)) );
 			amount1 += value;
 			value = 2*value;
-			assertTrue( purse.insert(new Coin(value)) );
+			assertTrue( purse.insert( new Coin(value)) );
 			amount2 += value;
 			value = 2*value;
 		}
 		assertEquals(amount1+amount2, purse.getBalance(), TOL );
 		assertEquals(10, purse.count() );
 		Coin [] wd1 = purse.withdraw(amount1);
-		assertEquals(amount1, sumValue(wd1) );
+		assertEquals(amount1, sumValue(wd1), TOL );
 		assertEquals(amount2, purse.getBalance(), TOL );
 		Coin [] wd2 = purse.withdraw(amount2);
 		assertEquals(0, purse.getBalance(), TOL );
@@ -144,7 +149,7 @@ public class PurseTest {
 	}
 	
 	/**
-	 * Some the value of some coins.
+	 * Sum the value of some coins.
 	 * @param coins array of coins
 	 * @return sum of values of the coins
 	 */

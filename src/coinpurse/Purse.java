@@ -93,7 +93,6 @@ public class Purse {
 	 *    or null if cannot withdraw requested amount.
      */
     public Coin[] withdraw( double amount ) {
-        //TODO don't allow to withdraw amount < 0
 	   /*
 		* See lab sheet for outline of a solution, 
 		* or devise your own solution.
@@ -102,7 +101,7 @@ public class Purse {
     	if ( amount > getBalance() ) return null;
     	
 		ArrayList<Coin> tampoWithdraw = new ArrayList<Coin>();
-    	for (int i=money.size()-1 ; i>=0 ; i--){
+    	for (int i=money.size()-1 ; i>=0 ; i--) {
     		if ( money.get(i).getValue() <= amount ) {
     			tampoWithdraw.add(money.get(i));
     			amount -= money.get(i).getValue();
@@ -125,8 +124,7 @@ public class Purse {
 			money.remove( tampoWithdraw.get(i) );
 		}
 		Coin[] array = new Coin[tampoWithdraw.size()];
-        return tampoWithdraw.toArray(array); 
-        //TODO replace this with real code
+        return tampoWithdraw.toArray(array);
 	}
   
     /** 
