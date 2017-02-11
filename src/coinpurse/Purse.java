@@ -3,6 +3,7 @@ package coinpurse;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  *  A coin purse contains coins.
@@ -16,7 +17,7 @@ import java.util.Collections;
  */
 public class Purse {
     /** Collection of objects in the purse. */
-	private ArrayList<Coin> money = new ArrayList<Coin>();
+	private List<Coin> money = new ArrayList<Coin>();
     /** Capacity is maximum number of coins the purse can hold.
      *  Capacity is set when the purse is created and cannot be changed.
      */
@@ -99,10 +100,10 @@ public class Purse {
     	if ( amount < 0 ) return null;
     	if ( amount > getBalance() ) return null;
     	
-		ArrayList<Coin> tampoWithdraw = new ArrayList<Coin>();
+		List<Coin> tampWithdraw = new ArrayList<Coin>();
     	for (int i=money.size()-1 ; i>=0 ; i--) {
     		if ( money.get(i).getValue() <= amount ) {
-    			tampoWithdraw.add(money.get(i));
+    			tampWithdraw.add(money.get(i));
     			amount -= money.get(i).getValue();
     		}
     	}
@@ -119,12 +120,10 @@ public class Purse {
 		// and return them as an array.
 		// Use list.toArray( array[] ) to copy a list into an array.
 		// toArray returns a reference to the array itself.
-		for (int i=0 ; i<tampoWithdraw.size() ; i++){
-			money.remove( tampoWithdraw.get(i) );
-		}
+		for (Coin remove : tampWithdraw) money.remove( remove );
 		Collections.sort(money);
-		Coin[] array = new Coin[tampoWithdraw.size()];
-        return tampoWithdraw.toArray(array);
+		Coin[] withdraw = new Coin[tampWithdraw.size()];
+        return tampWithdraw.toArray(withdraw);
 	}
   
     /** 
@@ -132,6 +131,7 @@ public class Purse {
      * It can return whatever is a useful description.
      * @return String representation of the purse
      */
+    @Override
     public String toString() {
     	DecimalFormat numFormat = new DecimalFormat("0.##");
     	return String.format("%d coins with value %s",money.size(), numFormat.format(this.getBalance()) );

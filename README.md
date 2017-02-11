@@ -11,11 +11,11 @@
 
 ## Classes
 
-There is total of 8 class in this conpurse project.
-#### Coin class
+There is total of 8 class in this coinpurse project.
+### Coin class
 An imitation of coin with a monetary value and currency.
 
-#### Purse class
+### Purse class
 An imitation of purse that contain coin.
 * Able to insert coin.
 * Able to withdraw money.
@@ -23,18 +23,18 @@ An imitation of purse that contain coin.
 * Able to check if the purse is full.
 * When you withdraw money, the class decide which coin to remove.
 
-#### ConsoleDialog class
+### ConsoleDialog class
 User Interface for the Coin Purse.
 * Provide simple dialog for inserting, remove money to/from the purse, and displaying the balance.
 
-#### Main class
+### Main class
 As the name suggest, It is a main class to create object and connect object together.
 
-#### CoinUtil class
+### CoinUtil class
 A collection of Coin's utility method for practice using List and Comparator.
 
-#### CompareByCurrency class
+### CompareByCurrency class
 A Comparator implements class to compare order of the Coin object by their currency, use in CoinUtil class.
 
-#### Addition : PurseTest class
+### Addition : PurseTest class
 A project tester using JUnit 4 test
