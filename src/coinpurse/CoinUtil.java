@@ -3,8 +3,10 @@ package coinpurse;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Some Coin utility methods for practice using Lists and Comparator.

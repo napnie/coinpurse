@@ -9,7 +9,7 @@ import java.util.Comparator;
  * @author Nitith Chayakul
  * @version 2017.02.10
  */
-public class Coin implements Comparable<Coin> {
+public class Coin implements Valuable {
 
     /** Value of the coin. */
     private double value;
@@ -68,7 +68,7 @@ public class Coin implements Comparable<Coin> {
      * 		, zero if their value is the same
      */
     @Override
-    public int compareTo(Coin other){
+    public int compareTo(Valuable other){
     	if ( other == null ) return -1;
     	if ( value < other.getValue() ) return -1;
     	if ( value > other.getValue() ) return 1;
@@ -85,6 +85,4 @@ public class Coin implements Comparable<Coin> {
     	DecimalFormat numFormat = new DecimalFormat("0.##");
     	return String.format("%s %s",numFormat.format(value),currency);
     }
-
-    
 }

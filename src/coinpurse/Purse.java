@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class Purse {
     /** Collection of objects in the purse. */
-	private List<Coin> money = new ArrayList<Coin>();
+	private List<Valuable> money = new ArrayList<Valuable>();
     /** Capacity is maximum number of coins the purse can hold.
      *  Capacity is set when the purse is created and cannot be changed.
      */
@@ -46,7 +46,7 @@ public class Purse {
      */
     public double getBalance() {
     	double sum = 0;
-    	for (Coin coin: money ) sum += coin.getValue();
+    	for (Valuable value: money ) sum += value.getValue();
     	return sum; 
     }
 
@@ -75,11 +75,15 @@ public class Purse {
      * @param coin is a Coin object to insert into purse
      * @return true if coin inserted, false if can't insert
      */
-    public boolean insert( Coin coin ) {
+    public boolean insert( Valuable value ) {
         // if the purse is already full then can't insert anything.
     	if ( isFull()==true ) return false;
-    	if ( coin.getValue() <= 0 ) return false;
-    	money.add(coin);
+    	if ( value.getValue() <= 0 ) return false;
+//    	for (int i=0 ; i<money.size() ; i++){
+//    		if ( money.get(i).getValue() < value.getValue()) {
+    	money.add(value);
+//    		}
+//    	}
     	Collections.sort(money);
     	return true;
     }
@@ -92,7 +96,7 @@ public class Purse {
      *  @return array of Coin objects for money withdrawn, 
 	 *    or null if cannot withdraw requested amount.
      */
-    public Coin[] withdraw( double amount ) {
+    public Valuable[] withdraw( double amount ) {
 	   /*
 		* See lab sheet for outline of a solution, 
 		* or devise your own solution.
@@ -100,7 +104,7 @@ public class Purse {
     	if ( amount < 0 ) return null;
     	if ( amount > getBalance() ) return null;
     	
-		List<Coin> tampWithdraw = new ArrayList<Coin>();
+		List<Valuable> tampWithdraw = new ArrayList<Valuable>();
     	for (int i=money.size()-1 ; i>=0 ; i--) {
     		if ( money.get(i).getValue() <= amount ) {
     			tampWithdraw.add(money.get(i));
@@ -120,9 +124,9 @@ public class Purse {
 		// and return them as an array.
 		// Use list.toArray( array[] ) to copy a list into an array.
 		// toArray returns a reference to the array itself.
-		for (Coin remove : tampWithdraw) money.remove( remove );
+		for (Valuable remove : tampWithdraw) money.remove( remove );
 		Collections.sort(money);
-		Coin[] withdraw = new Coin[tampWithdraw.size()];
+		Valuable[] withdraw = new Coin[tampWithdraw.size()];
         return tampWithdraw.toArray(withdraw);
 	}
   
