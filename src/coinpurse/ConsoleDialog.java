@@ -80,7 +80,7 @@ public class ConsoleDialog {
         System.out.print("How much to withdraw? ");
         if ( console.hasNextDouble() ) {
              double amount = console.nextDouble( );
-             Valuable [] money = purse.withdraw(amount);
+             Valuable[] money = purse.withdraw(amount);
              if ( money == null ) 
                 System.out.printf("Sorry, couldn't withdraw %g %s\n", amount, CURRENCY);
              else {

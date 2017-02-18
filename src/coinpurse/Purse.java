@@ -6,11 +6,11 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- *  A coin purse contains coins.
- *  You can insert coins, withdraw money, check the balance,
+ *  A Valuable purse contains valuable.
+ *  You can insert valuable, withdraw money, check the balance,
  *  and check if the purse is full.
- *  When you withdraw money, the coin purse decides which
- *  coins to remove.
+ *  When you withdraw money, the valuable purse decides which
+ *  valuable to remove.
  *  
  *  @author Nitith Chayakul
  *  @version 2017.02.10
@@ -25,16 +25,16 @@ public class Purse {
     
     /** 
      *  Create a purse with a specified capacity.
-     *  @param capacity is maximum number of coins you can put in purse.
+     *  @param capacity is maximum number of Valuable you can put in purse.
      */
     public Purse( int capacity ) {
     	this.capacity = capacity;
     }
 
     /**
-     * Count and return the number of coins in the purse.
-     * This is the number of coins, not their value.
-     * @return the number of coins in the purse
+     * Count and return the number of Valuable in the purse.
+     * This is the number of Valuable, not their value.
+     * @return the number of Valuable in the purse
      */
     public int count() { 
     	return money.size(); 
@@ -52,7 +52,7 @@ public class Purse {
 
     
     /**
-     * Return the capacity of the coin purse.
+     * Return the capacity of the Valuable purse.
      * @return the capacity
      */
     public int getCapacity() { return capacity; }
@@ -69,31 +69,29 @@ public class Purse {
     }
 
     /** 
-     * Insert a coin into the purse.
+     * Insert a Valuable into the purse.
      * The coin is only inserted if the purse has space for it
-     * and the coin has positive value.  No worthless coins!
-     * @param coin is a Coin object to insert into purse
-     * @return true if coin inserted, false if can't insert
+     * and the Valuable has positive value.  No worthless Valuable!
+     * @param value is a Valuable object to insert into purse
+     * @return true if Valuable inserted, false if can't insert
      */
     public boolean insert( Valuable value ) {
         // if the purse is already full then can't insert anything.
-    	if ( isFull()==true ) return false;
+    	if ( isFull() ) return false;
     	if ( value.getValue() <= 0 ) return false;
-//    	for (int i=0 ; i<money.size() ; i++){
-//    		if ( money.get(i).getValue() < value.getValue()) {
+    	
     	money.add(value);
-//    		}
-//    	}
+    	
     	Collections.sort(money);
     	return true;
     }
     
     /**  
      *  Withdraw the requested amount of money.
-     *  Return an array of Coins withdrawn from purse,
+     *  Return an array of Valuable withdrawn from purse,
      *  or return null if cannot withdraw the amount requested.
      *  @param amount is the amount to withdraw
-     *  @return array of Coin objects for money withdrawn, 
+     *  @return array of Valuable objects for money withdrawn, 
 	 *    or null if cannot withdraw requested amount.
      */
     public Valuable[] withdraw( double amount ) {
@@ -104,30 +102,31 @@ public class Purse {
     	if ( amount < 0 ) return null;
     	if ( amount > getBalance() ) return null;
     	
-		List<Valuable> tampWithdraw = new ArrayList<Valuable>();
+		List<Valuable> tempWithdraw = new ArrayList<Valuable>();
     	for (int i=money.size()-1 ; i>=0 ; i--) {
     		if ( money.get(i).getValue() <= amount ) {
-    			tampWithdraw.add(money.get(i));
+    			tempWithdraw.add(money.get(i));
     			amount -= money.get(i).getValue();
     		}
     	}
     	
 		// Did we get the full amount?
-		// This code assumes you decrease amount each time you remove a coin.
+		// This code assumes you decrease amount each time you remove a Valuable.
 		if ( amount > 0 )
 		{	// failed. Don't change the contents of the purse.
 			return null;
 		}
 
 		// Success.
-		// Remove the coins you want to withdraw from purse,
+		// Remove the Valuable you want to withdraw from purse,
 		// and return them as an array.
 		// Use list.toArray( array[] ) to copy a list into an array.
 		// toArray returns a reference to the array itself.
-		for (Valuable remove : tampWithdraw) money.remove( remove );
+		for (Valuable remove : tempWithdraw) money.remove( remove );
 		Collections.sort(money);
-		Valuable[] withdraw = new Coin[tampWithdraw.size()];
-        return tampWithdraw.toArray(withdraw);
+		Valuable[] withdraw = new Coin[tempWithdraw.size()];
+		tempWithdraw.toArray(withdraw);
+        return withdraw;
 	}
   
     /** 
