@@ -58,7 +58,7 @@ public class PurseTest {
     @Test
     public void testInsertNoValue()
     {
-        Purse purse = new Purse(3);
+        Purse purse = new Purse(3 );
         Coin fakeCoin = new Coin(0);
         assertFalse( purse.insert(fakeCoin));
     }
@@ -67,13 +67,13 @@ public class PurseTest {
     @Test
     public void testIsFull()
     {   // borderline case (capacity 1)
-        Purse purse = new Purse(1);
+        Purse purse = new Purse(1 );
         assertFalse( purse.isFull() );
         purse.insert( new Coin(1) );
         assertTrue( purse.isFull() );
         // real test
         int capacity = 4;
-        purse = new Purse(capacity);
+        purse = new Purse(capacity );
         for(int k=1; k<=capacity; k++) {
             assertFalse(purse.isFull());
             purse.insert( new Coin(k) );
@@ -89,7 +89,7 @@ public class PurseTest {
 	@Test
 	public void testInsertSameCoin()
 	{
-		Purse purse = new Purse(5);
+		Purse purse = new Purse(5 );
 		Coin coin = new Coin(10);
 		assertTrue( purse.insert(coin) );
 		assertTrue( purse.insert(coin) ); // should be allowed
@@ -98,7 +98,7 @@ public class PurseTest {
 
 	@Test
 	public void testEasyWithdraw() {
-		Purse purse = new Purse(10);
+		Purse purse = new Purse(10 );
 		int [] values = {1, 10, 1000};
 		for(int value : values) {
 			Valuable coin = new Coin(value);
@@ -114,7 +114,7 @@ public class PurseTest {
 
 	@Test
 	public void testMultiWithdraw() {
-		Purse purse = new Purse(10);
+		Purse purse = new Purse(10 );
 		int value = 1;
 		double amount1 = 0;
 		double amount2 = 0;
@@ -137,7 +137,7 @@ public class PurseTest {
 
 	@Test
 	public void testImpossibleWithdraw() {
-		Purse purse = new Purse(10);
+		Purse purse = new Purse(10 );
 		assertNull( purse.withdraw(1) );
 		purse.insert( new Coin(20) );
 		assertNull( purse.withdraw(1) );

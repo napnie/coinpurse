@@ -12,9 +12,10 @@ import java.util.Scanner;
  */
 public class ConsoleDialog {
 	// default currency for this dialog
-	public static final String CURRENCY = "Baht";
+//	public static final String CURRENCY = "Baht";
     // use a single java.util.Scanner object for reading all input
     private static Scanner console = new Scanner( System.in );
+    private String currency;
     
     private Purse purse;
     
@@ -24,13 +25,14 @@ public class ConsoleDialog {
      */
     public ConsoleDialog( Purse purse ) {
     	this.purse = purse;
+    	currency = MoneyFactory.getInstance().getCurrency();
     }
     
     /** run the user interface */
     public void run() {
         String choice = "";
         while( true ) {
-            System.out.printf("Purse contains %.2f %s\n", purse.getBalance() ,CURRENCY);
+            System.out.printf("Purse contains %.2f %s\n", purse.getBalance() ,currency);
             if ( purse.isFull() ) System.out.println("Purse is FULL.");
             // print a list of choices
             System.out.print( 
@@ -44,7 +46,7 @@ public class ConsoleDialog {
             else System.out.println( "\""+choice+"\" is not a valid choice.");
         }
         // confirm that we are quitting
-        System.out.println("Goodbye. The purse still has "+purse.getBalance()+" "+CURRENCY);
+        System.out.println("Goodbye. The purse still has "+purse.getBalance()+" "+currency);
     }
 
     /** Ask the user how many coins to deposit into purse, then deposit them.
@@ -65,11 +67,7 @@ public class ConsoleDialog {
             	System.out.println("Sorry, "+value+" is not a valid amount.");
             	continue;
             }
-//            if (value >= 20 ) {
-//            	money = new BankNote(value);
-//            }else {
-//            	money = new Coin(value);
-//            }
+            
             System.out.printf("Deposit %s... ", money.toString() );
             boolean ok = purse.insert(money);
             System.out.println( (ok? "ok" : "FAILED") );
@@ -84,10 +82,10 @@ public class ConsoleDialog {
     public void withdrawDialog() {
         System.out.print("How much to withdraw? ");
         if ( console.hasNextDouble() ) {
-             double amount = console.nextDouble( );
+             double amount = console.nextDouble() ;
              Valuable[] money = purse.withdraw(amount);
              if ( money == null ) 
-                System.out.printf("Sorry, couldn't withdraw %g %s\n", amount, CURRENCY);
+                System.out.printf("Sorry, couldn't withdraw %g %s\n", amount, currency);
              else {
                 System.out.print("You withdrew: ");
                 for(int k=0; k<money.length; k++) {

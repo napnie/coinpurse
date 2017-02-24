@@ -9,7 +9,10 @@ import java.text.DecimalFormat;
  * @version 2017.02.10
  */
 public class Coin extends AbstractValuable {
-    String denomination;
+	/** attribute for a different denomination of a coin's currency */
+    private String denomination;
+    /** attribute for ratio to exchange from main currency to a different denomination */
+    private double exchange; 
 	
     /**
      * Create a coin with Baht currency.
@@ -28,9 +31,17 @@ public class Coin extends AbstractValuable {
     	super( value, currency);
     }
     
-    public Coin(double value, String currency, String denomination) {
+    /**
+     * Create a coin with denomination
+     * @param value - value of a coin with currency
+     * @param currency - currency of a coin
+     * @param denomination - currenct's different denomination of a coin
+     * @param exchange - ratio to exchange from main currency to different denomination
+     */
+    public Coin(double value, String currency, String denomination, double exchange) {
     	super( value, currency);
     	this.denomination = denomination;
+    	this.exchange = exchange;
     }
 
     /**
@@ -55,16 +66,16 @@ public class Coin extends AbstractValuable {
     @Override
     public String toString(){
     	String showCurrency;
+    	double showValue;
     	if ( denomination==null ) {
     		showCurrency = currency;
+    		showValue = value;
     	} else {
     		showCurrency = denomination;
+    		showValue = value * exchange;
     	}
     	DecimalFormat numFormat = new DecimalFormat("0.##");
-    	return String.format("%s %s",numFormat.format(value),showCurrency);
+    	return String.format("%s %s",numFormat.format(showValue),showCurrency);
     }
     
-    public void setDenomination(String denomination) {
-    	this.denomination = denomination;
-    }
 }

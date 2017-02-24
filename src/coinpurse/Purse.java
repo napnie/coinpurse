@@ -23,6 +23,7 @@ public class Purse {
      *  Capacity is set when the purse is created and cannot be changed.
      */
     private final int capacity;
+    private final String currency;
     
     /** 
      *  Create a purse with a specified capacity.
@@ -30,6 +31,7 @@ public class Purse {
      */
     public Purse( int capacity ) {
     	this.capacity = capacity;
+    	currency = MoneyFactory.getInstance().getCurrency();
     }
 
     /**
@@ -51,19 +53,6 @@ public class Purse {
     	return sum; 
     }
     
-    public Map<String,Double> getMapSum() {
-    	Map<String, Double> sum = new HashMap<String, Double>();
-		for (Valuable shiny : money) {
-			String currency = shiny.getCurrency();
-			if ( sum.containsKey( currency ) ) {
-				sum.put(currency,shiny.getValue()+sum.get(currency));
-			} else {
-				sum.put(currency, shiny.getValue());
-			}
-		}
-		return sum;
-    }
-    
     /**
      * Return the capacity of the Valuable purse.
      * @return the capacity
@@ -81,6 +70,14 @@ public class Purse {
         return false;
     }
 
+    /**
+     * Return currency of a money in a purse.
+     * @return currency of a money in a purse
+     */
+    public String getCurrency() {
+    	return currency;
+    }
+    
     /** 
      * Insert a Valuable into the purse.
      * The coin is only inserted if the purse has space for it
@@ -92,6 +89,7 @@ public class Purse {
         // if the purse is already full then can't insert anything.
     	if ( isFull() ) return false;
     	if ( value.getValue() <= 0 ) return false;
+    	if ( !value.getCurrency().equals(currency) ) return false;
     	
     	money.add(value);
     	
@@ -114,7 +112,7 @@ public class Purse {
 		*/
     	if ( amount < 0 ) return null;
     	if ( amount > getBalance() ) return null;
-    	
+
 		List<Valuable> tempWithdraw = new ArrayList<Valuable>();
     	for (int i=money.size()-1 ; i>=0 ; i--) {
     		if ( money.get(i).getValue() <= amount ) {
@@ -126,7 +124,7 @@ public class Purse {
 		// Did we get the full amount?
 		// This code assumes you decrease amount each time you remove a Valuable.
 		if ( amount > 0 )
-		{	// failed. Don't change the contents of the purse.
+		{	
 			return null;
 		}
 
@@ -151,29 +149,6 @@ public class Purse {
     public String toString() {
     	DecimalFormat numFormat = new DecimalFormat("0.##");
     	return String.format("%d valuables with value %s",money.size(), numFormat.format(this.getBalance()) );
-
-    	/** in case purse has more than 1 currency. */
-//    	Map<String,Double> sum = getMapSum();
-//    	String out ="";
-//    	
-//    	for (String currency : sum.keySet() ) {
-//    		int coinCount = 0;
-//    		int banknoteCount = 0;
-//    		Coin ccde = new Coin(5.0);
-//    		for (Valuable val : money) {
-//    			if ( val.getClass() == ccde.getClass() ) {
-//    				coinCount++;
-//    			} else {
-//    				banknoteCount++;
-//    			}
-//    		}
-//    		out = out+String.format("%s : %s has %d coin and %d banknote \n",currency,numFormat.format(sum.get(currency)), coinCount, banknoteCount );
-//    	}
-//    	if (out.equals("")) {
-//    		out = "Nothing.";
-//    	}
-//    	return out;
-    	
     }
 
 }

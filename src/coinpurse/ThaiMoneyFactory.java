@@ -8,6 +8,8 @@ package coinpurse;
 public class ThaiMoneyFactory extends MoneyFactory {
 	/** attribute for assigns banknote serial number */
 	private static long nextSerialNumber = 10000001L;
+	/** attribute for Thai currency */
+	private final String CURRENCY = "Baht";
 	
 	/**
 	 * Create a baht money.
@@ -28,16 +30,24 @@ public class ThaiMoneyFactory extends MoneyFactory {
 	}
 	
 	/**
+	 * Return Thai currency.
+	 * @return thai currency
+	 */
+	public String getCurrency() {
+		return CURRENCY;
+	}
+	
+	/**
 	 * Check if value can be consider as baht coin.
 	 * @param value - value that you want to check
 	 * @return true if it is baht coin, false if it is not
 	 */
 	private boolean isCoin(double value) {
-		if (value == 1 || value == 2 || value == 5 || value == 10) {
-			return true;
-		} else {
-			return false;
+		double[] possibleCoin = {1, 2, 5, 10};
+		for (double coinValue : possibleCoin) {
+			if (value == coinValue) return true;
 		}
+		return false;
 	}
 	
 	/**
@@ -46,11 +56,11 @@ public class ThaiMoneyFactory extends MoneyFactory {
 	 * @return true if it is baht banknote, false if it is not
 	 */
 	private boolean isBankNote(double value) {
-		if (value == 20 || value == 50 || value == 100 || value == 500 || value == 1000) {
-			return true;
-		} else {
-			return false;
+		double[] possibleBankNote = { 20, 50, 100, 500, 1000};
+		for (double bankNoteValue : possibleBankNote) {
+			if (value == bankNoteValue) return true;
 		}
+		return false;
 	}
 
 }

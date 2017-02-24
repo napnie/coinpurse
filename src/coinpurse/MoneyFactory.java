@@ -11,11 +11,6 @@ abstract public class MoneyFactory {
 	/** attribute to return in getInstance method */
 	private static MoneyFactory factory = null;
 	
-	private static ResourceBundle bundle = ResourceBundle.getBundle("moneyFactory");
-	private static String factoryclass = bundle.getString("moneyfactory");
-	
-	
-	
 	/**
 	 * MoneyFactory Constructor
 	 */
@@ -27,12 +22,19 @@ abstract public class MoneyFactory {
 	 */
 	public static MoneyFactory getInstance() {
 		if (factory == null) {
-			if ( factoryclass.equals("coinpurse.ThaiMoneyFactory") ) {
-				factory = new ThaiMoneyFactory();
-			} else if ( factoryclass.equals("coinpurse.MalayMoneyFactory") ) {
-				factory = new MalayMoneyFactory();
-			}
-			
+			ResourceBundle bundle = ResourceBundle.getBundle("moneyFactory");
+	    	String factoryclass = bundle.getString("moneyfactory");
+	    	if (factoryclass == null) {
+	    		factoryclass = "coinpurse.ThaiMoneyFactory";
+	    	}
+	    	
+	    	try {
+	    		factory = (MoneyFactory) Class.forName(factoryclass).newInstance();
+	    	} catch (ClassCastException cce) {
+	    		System.out.println(factoryclass+" is not type MoneyFactory");
+	    	} catch (Exception ex) {
+	    		System.out.println("Error creating MoneyFactory "+ex.getMessage() );
+	    	} if (factory == null) System.exit(1);
 		}
 		return factory;
 	}
@@ -43,6 +45,8 @@ abstract public class MoneyFactory {
 	 * @return Valuable object of money
 	 */
 	public abstract Valuable createMoney(double value) ;
+	
+	public abstract String getCurrency() ;
 	
 	/**
 	 * Create money object from String
