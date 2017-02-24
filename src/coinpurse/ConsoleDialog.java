@@ -31,7 +31,7 @@ public class ConsoleDialog {
     public void run() {
         String choice = "";
         while( true ) {
-            System.out.printf("Purse contains %.2f %s\n", purse.getBalance(), CURRENCY );
+            System.out.printf("Purse contains %s\n", purse.toString() );
             if ( purse.isFull() ) System.out.println("Purse is FULL.");
             // print a list of choices
             System.out.print( 
@@ -60,11 +60,18 @@ public class ConsoleDialog {
             double value = scanline.nextDouble();
 //          Coin coin = new Coin(value);
             Valuable money ;
-            if (value >= 20 ) {
-            	money = new BankNote(value);
-            }else {
-            	money = new Coin(value);
+            
+            try {
+            	money = MoneyFactory.getInstance().createMoney(value);
+            } catch (IllegalArgumentException ex) {
+            	System.out.println("Sorry, "+value+" is not a valid amount.");
+            	continue;
             }
+//            if (value >= 20 ) {
+//            	money = new BankNote(value);
+//            }else {
+//            	money = new Coin(value);
+//            }
             System.out.printf("Deposit %s... ", money.toString() );
             boolean ok = purse.insert(money);
             System.out.println( (ok? "ok" : "FAILED") );

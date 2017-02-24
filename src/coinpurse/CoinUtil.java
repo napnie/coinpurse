@@ -124,8 +124,8 @@ public class CoinUtil {
 	}
 	
 	/** Print the list on the console, on one line. */
-	public static void printList(List items, String separator) {
-		Iterator iter = items.iterator();
+	public static void printList(List<Valuable> items, String separator) {
+		Iterator<Valuable> iter = items.iterator();
 		while( iter.hasNext() ) { 
 			System.out.print(iter.next());
 			if (iter.hasNext()) System.out.print(separator);

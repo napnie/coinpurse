@@ -1,7 +1,6 @@
 package coinpurse;
 
 import java.text.DecimalFormat;
-import java.util.Comparator;
 
 /**
  * A coin with a monetary value and currency.
@@ -10,7 +9,8 @@ import java.util.Comparator;
  * @version 2017.02.10
  */
 public class Coin extends AbstractValuable {
-    
+    String denomination;
+	
     /**
      * Create a coin with Baht currency.
      * @param value is the value of the coin
@@ -26,6 +26,11 @@ public class Coin extends AbstractValuable {
      */
     public Coin( double value , String currency){
     	super( value, currency);
+    }
+    
+    public Coin(double value, String currency, String denomination) {
+    	super( value, currency);
+    	this.denomination = denomination;
     }
 
     /**
@@ -49,7 +54,17 @@ public class Coin extends AbstractValuable {
      */
     @Override
     public String toString(){
+    	String showCurrency="";
+    	if ( denomination==null ) {
+    		showCurrency = currency;
+    	} else {
+    		showCurrency = denomination;
+    	}
     	DecimalFormat numFormat = new DecimalFormat("0.##");
-    	return String.format("%s %s",numFormat.format(value),currency);
+    	return String.format("%s %s",numFormat.format(value),showCurrency);
+    }
+    
+    public void setDenomination(String denomination) {
+    	this.denomination = denomination;
     }
 }

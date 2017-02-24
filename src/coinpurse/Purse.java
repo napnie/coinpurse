@@ -3,7 +3,9 @@ package coinpurse;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *  A Valuable purse contains valuable.
@@ -44,10 +46,21 @@ public class Purse {
      *  Get the total value of all items in the purse.
      *  @return the total value of items in the purse.
      */
-    public double getBalance() {
-    	double sum = 0;
-    	for (Valuable value: money ) sum += value.getValue();
-    	return sum; 
+    public Map<String,Double> getBalance() {
+//    	double sum = 0;
+//    	for (Valuable value: money ) sum += value.getValue();
+//    	return sum; 
+    	
+    	Map<String, Double> sum = new HashMap<String, Double>();
+		for (Valuable shiny : money) {
+			String currency = shiny.getCurrency();
+			if ( sum.containsKey( currency ) ) {
+				sum.put(currency,shiny.getValue()+sum.get(currency));
+			} else {
+				sum.put(currency, shiny.getValue());
+			}
+		}
+		return sum;
     }
 
     
@@ -100,7 +113,7 @@ public class Purse {
 		* or devise your own solution.
 		*/
     	if ( amount < 0 ) return null;
-    	if ( amount > getBalance() ) return null;
+//    	if ( amount > getBalance() ) return null;
     	
 		List<Valuable> tempWithdraw = new ArrayList<Valuable>();
     	for (int i=money.size()-1 ; i>=0 ; i--) {
@@ -137,7 +150,28 @@ public class Purse {
     @Override
     public String toString() {
     	DecimalFormat numFormat = new DecimalFormat("0.##");
-    	return String.format("%d coins with value %s",money.size(), numFormat.format(this.getBalance()) );
+    	Map<String,Double> sum = getBalance();
+    	String out ="";
+    	
+    	for (String currency : sum.keySet() ) {
+    		int coinCount = 0;
+    		int banknoteCount = 0;
+    		Coin ccde = new Coin(5.0);
+    		for (Valuable val : money) {
+    			if ( val.getClass() == ccde.getClass() ) {
+    				coinCount++;
+    			} else {
+    				banknoteCount++;
+    			}
+    		}
+    		out = out+String.format("%s : %s has %d coin and %d banknote \n",currency,numFormat.format(sum.get(currency)), coinCount, banknoteCount );
+    	}
+    	if (out.equals("")) {
+    		out = "Nothing.";
+    	}
+    	return out;
+    	
+//    	return String.format("%d coins with value %s",money.size(), numFormat.format(this.getBalance()) );
     }
 
 }

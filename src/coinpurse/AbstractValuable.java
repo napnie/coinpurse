@@ -1,7 +1,7 @@
 package coinpurse;
 
 /**
- * 
+ * Abstract class for Valuable interface to avoid duplicate code.
  * @author Nitith Chayakul
  *
  */

@@ -10,18 +10,18 @@ import java.text.DecimalFormat;
 public class BankNote extends AbstractValuable {
 	
 	/** attribute for assigning unique serial number */
-	private static long nextSerialNumber = 10000000L;
+//	private static long nextSerialNumber = 10000000L;
 	
 	/** unique bank note's serial number */
-	private long serialNumber;
+	private final long serialNumber;
 	
 	/**
 	 * Initialize a bank note.
 	 * @param value - initial value of bank note
 	 */
-	public BankNote(double value) {
-		super( value, "Baht" );
-		serialNumber = nextSerialNumber++;
+	public BankNote(double value, long serialNumber) {
+		super( value, "Baht");
+		this.serialNumber = serialNumber;
 	}
 	
 	/**
@@ -29,9 +29,9 @@ public class BankNote extends AbstractValuable {
 	 * @param value - initial value of bank note
 	 * @param currency - currency of bank note
 	 */
-	public BankNote(double value, String currency) {
+	public BankNote(double value, String currency, long serialNumber) {
 		super( value, currency);
-		serialNumber = nextSerialNumber++;
+		this.serialNumber = serialNumber;
 	}
 	
 	/**
