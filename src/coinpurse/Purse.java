@@ -15,7 +15,6 @@ import java.util.Map;
  *  valuable to remove.
  *  
  *  @author Nitith Chayakul
- *  @version 2017.02.10
  */
 public class Purse {
     /** Collection of objects in the purse. */
@@ -46,11 +45,13 @@ public class Purse {
      *  Get the total value of all items in the purse.
      *  @return the total value of items in the purse.
      */
-    public Map<String,Double> getBalance() {
-//    	double sum = 0;
-//    	for (Valuable value: money ) sum += value.getValue();
-//    	return sum; 
-    	
+    public double getBalance() {
+    	double sum = 0;
+    	for (Valuable value: money ) sum += value.getValue();
+    	return sum; 
+    }
+    
+    public Map<String,Double> getMapSum() {
     	Map<String, Double> sum = new HashMap<String, Double>();
 		for (Valuable shiny : money) {
 			String currency = shiny.getCurrency();
@@ -62,7 +63,6 @@ public class Purse {
 		}
 		return sum;
     }
-
     
     /**
      * Return the capacity of the Valuable purse.
@@ -113,7 +113,7 @@ public class Purse {
 		* or devise your own solution.
 		*/
     	if ( amount < 0 ) return null;
-//    	if ( amount > getBalance() ) return null;
+    	if ( amount > getBalance() ) return null;
     	
 		List<Valuable> tempWithdraw = new ArrayList<Valuable>();
     	for (int i=money.size()-1 ; i>=0 ; i--) {
@@ -150,28 +150,30 @@ public class Purse {
     @Override
     public String toString() {
     	DecimalFormat numFormat = new DecimalFormat("0.##");
-    	Map<String,Double> sum = getBalance();
-    	String out ="";
+    	return String.format("%d valuables with value %s",money.size(), numFormat.format(this.getBalance()) );
+
+    	/** in case purse has more than 1 currency. */
+//    	Map<String,Double> sum = getMapSum();
+//    	String out ="";
+//    	
+//    	for (String currency : sum.keySet() ) {
+//    		int coinCount = 0;
+//    		int banknoteCount = 0;
+//    		Coin ccde = new Coin(5.0);
+//    		for (Valuable val : money) {
+//    			if ( val.getClass() == ccde.getClass() ) {
+//    				coinCount++;
+//    			} else {
+//    				banknoteCount++;
+//    			}
+//    		}
+//    		out = out+String.format("%s : %s has %d coin and %d banknote \n",currency,numFormat.format(sum.get(currency)), coinCount, banknoteCount );
+//    	}
+//    	if (out.equals("")) {
+//    		out = "Nothing.";
+//    	}
+//    	return out;
     	
-    	for (String currency : sum.keySet() ) {
-    		int coinCount = 0;
-    		int banknoteCount = 0;
-    		Coin ccde = new Coin(5.0);
-    		for (Valuable val : money) {
-    			if ( val.getClass() == ccde.getClass() ) {
-    				coinCount++;
-    			} else {
-    				banknoteCount++;
-    			}
-    		}
-    		out = out+String.format("%s : %s has %d coin and %d banknote \n",currency,numFormat.format(sum.get(currency)), coinCount, banknoteCount );
-    	}
-    	if (out.equals("")) {
-    		out = "Nothing.";
-    	}
-    	return out;
-    	
-//    	return String.format("%d coins with value %s",money.size(), numFormat.format(this.getBalance()) );
     }
 
 }

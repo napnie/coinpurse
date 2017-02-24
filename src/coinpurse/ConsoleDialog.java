@@ -9,7 +9,6 @@ import java.util.Scanner;
  * balance.
  * 
  * @author Nitith Chayakul
- * @version 2017.02.10
  */
 public class ConsoleDialog {
 	// default currency for this dialog
@@ -31,7 +30,7 @@ public class ConsoleDialog {
     public void run() {
         String choice = "";
         while( true ) {
-            System.out.printf("Purse contains %s\n", purse.toString() );
+            System.out.printf("Purse contains %.2f %s\n", purse.getBalance() ,CURRENCY);
             if ( purse.isFull() ) System.out.println("Purse is FULL.");
             // print a list of choices
             System.out.print( 
@@ -58,7 +57,6 @@ public class ConsoleDialog {
         Scanner scanline = new Scanner(inline);
         while( scanline.hasNextDouble() ) {
             double value = scanline.nextDouble();
-//          Coin coin = new Coin(value);
             Valuable money ;
             
             try {
@@ -91,9 +89,9 @@ public class ConsoleDialog {
              if ( money == null ) 
                 System.out.printf("Sorry, couldn't withdraw %g %s\n", amount, CURRENCY);
              else {
-                System.out.print("You withdrew:");
+                System.out.print("You withdrew: ");
                 for(int k=0; k<money.length; k++) {
-                	System.out.print(" " + money[k].toString() );
+                	System.out.print( money[k].toString() +", ");
                 }
                 System.out.println();
             }

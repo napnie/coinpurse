@@ -3,7 +3,7 @@ package coinpurse;
 import java.util.ResourceBundle;
 
 /**
- * 
+ * Factory class to create money object.
  * @author Nitith Chayakul
  *
  */
@@ -17,13 +17,13 @@ abstract public class MoneyFactory {
 	
 	
 	/**
-	 * Constructor
+	 * MoneyFactory Constructor
 	 */
 	protected MoneyFactory() {}
 	
 	/**
-	 * 
-	 * @return
+	 * Return MoneyFactory object
+	 * @return object of this subclass
 	 */
 	public static MoneyFactory getInstance() {
 		if (factory == null) {
@@ -38,16 +38,16 @@ abstract public class MoneyFactory {
 	}
 	
 	/**
-	 * 
-	 * @param value
-	 * @return
+	 * Create money object
+	 * @param value - value of money
+	 * @return Valuable object of money
 	 */
 	public abstract Valuable createMoney(double value) ;
 	
 	/**
-	 * 
-	 * @param value
-	 * @return
+	 * Create money object from String
+	 * @param value - value of money in String
+	 * @return Valuable object of money
 	 */
 	public Valuable createMoney(String value) {
 		return this.createMoney(Double.parseDouble(value));

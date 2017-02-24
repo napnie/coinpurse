@@ -54,7 +54,7 @@ public class Coin extends AbstractValuable {
      */
     @Override
     public String toString(){
-    	String showCurrency="";
+    	String showCurrency;
     	if ( denomination==null ) {
     		showCurrency = currency;
     	} else {
