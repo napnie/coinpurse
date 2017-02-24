@@ -9,19 +9,14 @@ import java.util.Comparator;
  * @author Nitith Chayakul
  * @version 2017.02.10
  */
-public class Coin implements Valuable {
-
-    /** Value of the coin. */
-    private double value;
-    /** The currency, of course. */
-    private String currency = "Baht";
+public class Coin extends AbstractValuable {
     
     /**
      * Create a coin with Baht currency.
      * @param value is the value of the coin
      */
     public Coin( double value ) {
-        this.value = value;
+        super( value , "Baht");	
     }
     
     /**
@@ -30,24 +25,11 @@ public class Coin implements Valuable {
      * @param currency is a coin's currency
      */
     public Coin( double value , String currency){
-    	this.value = value;
-    	this.currency = currency;
+    	super( value, currency);
     }
 
     /**
-     * Get the value of the coin.
-     * @return value of the coin
-     */
-    public double getValue( ) { return value; }
-    
-    /**
-     * Get the coin's currency.
-     * @return coin's currency
-     */
-    public String getCurrency() {return this.currency;}
-    
-    /**
-     * Test if other object and this Coin class are equal in value
+     * Test if other object and this Money class are equal in value
      * @param obj - Other object
      * @return false if other object are null or not the Coin class or has different value, 
      * true if other object are the Coin class with the same value 
@@ -60,22 +42,7 @@ public class Coin implements Valuable {
     	if ( value == other.getValue() ) return true;
     	return false;
     }
-
-    /**
-     * Compare order of the coin.
-     * @param other is other coin to compare
-     * @return order of the object : negative if this value is less than coin or other coin is null, positive if this value is more than coin
-     * 		, zero if their value is the same
-     */
-    @Override
-    public int compareTo(Valuable other){
-    	if ( other == null ) return -1;
-    	if ( value < other.getValue() ) return -1;
-    	if ( value > other.getValue() ) return 1;
-    	return 0;
-    	
-    }
-
+    
     /**
      * Return String representation of the coin.
      * @return String representation of the coin

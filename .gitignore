@@ -2,4 +2,5 @@ bin/
 .settings/
 .classpath
 .project
-test.java
+test*.java
+Test*.java

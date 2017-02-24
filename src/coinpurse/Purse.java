@@ -124,7 +124,7 @@ public class Purse {
 		// toArray returns a reference to the array itself.
 		for (Valuable remove : tempWithdraw) money.remove( remove );
 		Collections.sort(money);
-		Valuable[] withdraw = new Coin[tempWithdraw.size()];
+		Valuable[] withdraw = new Valuable[tempWithdraw.size()];
 		tempWithdraw.toArray(withdraw);
         return withdraw;
 	}
