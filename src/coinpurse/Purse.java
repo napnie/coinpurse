@@ -3,9 +3,8 @@ package coinpurse;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Observable;
 
 /**
  *  A Valuable purse contains valuable.
@@ -16,7 +15,7 @@ import java.util.Map;
  *  
  *  @author Nitith Chayakul
  */
-public class Purse {
+public class Purse extends Observable {
     /** Collection of objects in the purse. */
 	private List<Valuable> money = new ArrayList<Valuable>();
     /** Capacity is maximum number of coins the purse can hold.
@@ -94,6 +93,8 @@ public class Purse {
     	money.add(value);
     	
     	Collections.sort(money);
+    	setChanged();
+    	notifyObservers("deposit " +value.toString() + ".");
     	return true;
     }
     
@@ -110,6 +111,7 @@ public class Purse {
 		* See lab sheet for outline of a solution, 
 		* or devise your own solution.
 		*/
+    	double origin = amount;
     	if ( amount < 0 ) return null;
     	if ( amount > getBalance() ) return null;
 
@@ -137,6 +139,8 @@ public class Purse {
 		Collections.sort(money);
 		Valuable[] withdraw = new Valuable[tempWithdraw.size()];
 		tempWithdraw.toArray(withdraw);
+		setChanged();
+    	notifyObservers("withdraw " +origin +" "+getCurrency()+ ".");
         return withdraw;
 	}
   

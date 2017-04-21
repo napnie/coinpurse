@@ -10,24 +10,24 @@ import java.util.ResourceBundle;
 abstract public class MoneyFactory {
 	/** attribute to return in getInstance method */
 	private static MoneyFactory factory = null;
-	
+
 	/**
 	 * MoneyFactory Constructor
 	 */
 	protected MoneyFactory() {}
-	
+
 	/**
 	 * Return MoneyFactory object
 	 * @return object of this subclass
 	 */
 	public static MoneyFactory getInstance() {
 		if (factory == null) {
-			ResourceBundle bundle = ResourceBundle.getBundle("moneyFactory");
+			ResourceBundle bundle = ResourceBundle.getBundle("purse");
 	    	String factoryclass = bundle.getString("moneyfactory");
 	    	if (factoryclass == null) {
 	    		factoryclass = "coinpurse.ThaiMoneyFactory";
 	    	}
-	    	
+
 	    	try {
 	    		factory = (MoneyFactory) Class.forName(factoryclass).newInstance();
 	    	} catch (ClassCastException cce) {
@@ -38,16 +38,16 @@ abstract public class MoneyFactory {
 		}
 		return factory;
 	}
-	
+
 	/**
 	 * Create money object
 	 * @param value - value of money
 	 * @return Valuable object of money
 	 */
 	public abstract Valuable createMoney(double value) ;
-	
+
 	public abstract String getCurrency() ;
-	
+
 	/**
 	 * Create money object from String
 	 * @param value - value of money in String
