@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 
+import coinpurse.strategy.*;
+
 /**
  *  A Valuable purse contains valuable.
  *  You can insert valuable, withdraw money, check the balance,
@@ -22,7 +24,15 @@ public class Purse extends Observable {
      *  Capacity is set when the purse is created and cannot be changed.
      */
     private final int capacity;
+    /** Currency of Valuable in Purse. */
     private final String currency;
+    
+    /** Strategy for withdraw method. */
+    private WithdrawStrategy strategy;
+    /** Greedy Withdraw Strategy. */
+    public static final WithdrawStrategy GREEDY = new GreedyWithdraw();
+    /** Recursive Withdraw Strategy. */
+    public static final WithdrawStrategy RECURSIVE = new RecursiveWithdraw();
     
     /** 
      *  Create a purse with a specified capacity.
@@ -31,6 +41,7 @@ public class Purse extends Observable {
     public Purse( int capacity ) {
     	this.capacity = capacity;
     	currency = MoneyFactory.getInstance().getCurrency();
+    	setWithdrawStrategy(GREEDY);
     }
 
     /**
@@ -111,24 +122,11 @@ public class Purse extends Observable {
 		* See lab sheet for outline of a solution, 
 		* or devise your own solution.
 		*/
-    	double origin = amount;
     	if ( amount < 0 ) return null;
     	if ( amount > getBalance() ) return null;
-
-		List<Valuable> tempWithdraw = new ArrayList<Valuable>();
-    	for (int i=money.size()-1 ; i>=0 ; i--) {
-    		if ( money.get(i).getValue() <= amount ) {
-    			tempWithdraw.add(money.get(i));
-    			amount -= money.get(i).getValue();
-    		}
-    	}
     	
-		// Did we get the full amount?
-		// This code assumes you decrease amount each time you remove a Valuable.
-		if ( amount > 0 )
-		{	
-			return null;
-		}
+    	List<Valuable> tempWithdraw = strategy.withdraw( amount, money) ;
+    	if( tempWithdraw == null ) return null;
 
 		// Success.
 		// Remove the Valuable you want to withdraw from purse,
@@ -140,9 +138,13 @@ public class Purse extends Observable {
 		Valuable[] withdraw = new Valuable[tempWithdraw.size()];
 		tempWithdraw.toArray(withdraw);
 		setChanged();
-    	notifyObservers("withdraw " +origin +" "+getCurrency()+ ".");
+    	notifyObservers("withdraw " +amount +" "+getCurrency()+ ".");
         return withdraw;
 	}
+    
+    public void setWithdrawStrategy(WithdrawStrategy strategy) {
+    	this.strategy = strategy;
+    }
   
     /** 
      * toString returns a string description of the purse contents.
