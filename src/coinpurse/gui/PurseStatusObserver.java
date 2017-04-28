@@ -13,15 +13,22 @@ import javax.swing.SwingConstants;
 
 import coinpurse.Purse;
 
+/**
+ * GUI Observer for Purse Status.
+ * @author Nitith Chayakul
+ *
+ */
 public class PurseStatusObserver extends JFrame implements Observer {
+	/** component for display Purse status */
 	private JTextField text;
+	/** component for display Puarse current size */
 	private JProgressBar bar;
+	/** Constant for font size */
 	private final int FONT_SIZE = 60;
 	
-	public PurseStatusObserver() {
-		
-	}
-	
+	/**
+	 * Run this GUI
+	 */
 	public void run() {
 		initComponents();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -30,6 +37,9 @@ public class PurseStatusObserver extends JFrame implements Observer {
 		this.setVisible(true);
 	}
 
+	/**
+	 * Initialize components in this GUI.
+	 */
 	private void initComponents() {
 		text = new JTextField(14);
 		text.setEditable(false);
@@ -52,6 +62,9 @@ public class PurseStatusObserver extends JFrame implements Observer {
 		this.pack();
 	}
 
+	/**
+	 * Update display from Purse notification.
+	 */
 	@Override
 	public void update(Observable subject, Object info) {
 		if( subject instanceof Purse ) {
@@ -60,18 +73,16 @@ public class PurseStatusObserver extends JFrame implements Observer {
 			if( purse.isFull() ) {
 				text.setForeground(Color.RED);
 				text.setText("Full");
-				bar.setValue( purse.getCapacity() );
 				bar.setForeground(Color.RED);
 			} else if ( purse.count() > 0 ) {
 				text.setForeground(Color.GREEN);
 				text.setText("Currently have : "+purse.count()+"/"+purse.getCapacity() );
-				bar.setValue( purse.count() );
 				bar.setForeground(Color.GREEN);
 			} else {
 				text.setForeground(Color.YELLOW);
 				text.setText("Empty");
-				bar.setValue(0);
 			}
+			bar.setValue( purse.count() );
 		}
 	}
 }
