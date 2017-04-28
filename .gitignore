@@ -4,4 +4,4 @@ bin/
 .project
 
 Test*.java
-*Test.java
+PurseTest.java
