@@ -2,6 +2,7 @@ package coinpurse.strategy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import coinpurse.Valuable;
 
@@ -28,9 +29,9 @@ public class RecursiveWithdraw implements WithdrawStrategy {
 	 * @param withdraw - list of possible valuable to withdraw
 	 * @return list of valuable to withdraw, null if unable to withdraw
 	 */
-	private List<Valuable> withdrawHelp(double amount, List<Valuable> valuable, ArrayList<Valuable> withdraw) {
+	private List<Valuable> withdrawHelp(double amount, List<Valuable> valuable, List<Valuable> withdraw) {
 		if( withdraw == null ) withdraw = new ArrayList<Valuable>();
-//		System.out.printf("%f %s %s \n",amount,Arrays.toString(valuable.toArray()),Arrays.toString(withdraw.toArray()));
+		
 		if(amount == 0) return withdraw;
 		if( valuable.isEmpty() ) return null;
 		Valuable first = valuable.get(0);
@@ -39,19 +40,14 @@ public class RecursiveWithdraw implements WithdrawStrategy {
 		
 		// don't select
 		anwser = withdrawHelp(amount, valuable.subList(1, valuable.size() ), withdraw);
-		if( anwser != null ) {
-			return anwser ;
-		}
+		if( anwser != null ) return anwser ;
 		
 		// select
 		if( amount >= first.getValue() ) {
-			@SuppressWarnings("unchecked")
-			ArrayList<Valuable> temp = (ArrayList<Valuable>) withdraw.clone();
+			List<Valuable> temp = withdraw.stream().collect(Collectors.toList()); // Clone withdraw
 			temp.add(first);
 			anwser = withdrawHelp(amount-first.getValue(), valuable.subList(1, valuable.size() ), temp);
-			if( anwser != null ) {
-				return anwser;
-			}
+			if( anwser != null ) return anwser;
 		}
 		
 		return null;

@@ -38,11 +38,12 @@ public class PurseWithdrawTest {
 	
 	@Test
 	public void setStrategyTest() {
-		initValuable( 5,1 );
-		initValuable(2, 3);
-		assertNull( purse.withdraw(6) );
+		initValuable(5, 2);
+		initValuable(2, 4);
+		
+		assertNull( purse.withdraw(8) );
 		purse.setWithdrawStrategy(Purse.RECURSIVE);
-		assertArrayEquals( fillCoin(2,3) , purse.withdraw(6) );
+		assertArrayEquals("Recursive strategy should be able to solve this.", fillCoin(2,4) , purse.withdraw(8) );
 	}
 	
 	/**
