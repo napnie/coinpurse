@@ -122,7 +122,7 @@ public class Purse extends Observable {
 		* See lab sheet for outline of a solution, 
 		* or devise your own solution.
 		*/
-    	if ( amount < 0 ) return null;
+    	if ( amount <= 0 ) return null;
     	if ( amount > getBalance() ) return null;
     	
     	List<Valuable> tempWithdraw = strategy.withdraw( amount, money) ;
@@ -142,6 +142,10 @@ public class Purse extends Observable {
         return withdraw;
 	}
     
+    /**
+     * Set strategy for withdraw method.
+     * @param strategy - strategy for withdraw method
+     */
     public void setWithdrawStrategy(WithdrawStrategy strategy) {
     	this.strategy = strategy;
     }

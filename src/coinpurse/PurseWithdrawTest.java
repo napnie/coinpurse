@@ -26,6 +26,7 @@ public class PurseWithdrawTest {
 		Valuable[] ans = purse.withdraw(9);
 		assertNotNull( ans );
 		assertEquals( 9.0, getBalance(ans) ,1.0E-10);
+		assertEquals(5, purse.getBalance(), 1.0E-10);
 	}
 	
 	@Test
@@ -34,6 +35,7 @@ public class PurseWithdrawTest {
 		initValuable(2, 3);
 		purse.setWithdrawStrategy(Purse.RECURSIVE);
 		assertArrayEquals( fillCoin(2,3) , purse.withdraw(6) );
+		assertEquals(5, purse.getBalance(), 1.0E-10);
 	}
 	
 	@Test
@@ -42,8 +44,10 @@ public class PurseWithdrawTest {
 		initValuable(2, 4);
 		
 		assertNull( purse.withdraw(8) );
+		assertEquals( "Failed withdraw should not chang anything.", 18, purse.getBalance(), 1.0E-10);
 		purse.setWithdrawStrategy(Purse.RECURSIVE);
 		assertArrayEquals("Recursive strategy should be able to solve this.", fillCoin(2,4) , purse.withdraw(8) );
+		assertEquals(10, purse.getBalance(), 1.0E-10);
 	}
 	
 	/**
@@ -74,9 +78,7 @@ public class PurseWithdrawTest {
 	 */
 	private Valuable[] fillCoin(int value, int amount) {
 		Valuable[] valueList = new Valuable[amount];
-		for(int i=0 ; i<amount ; i++ ) {
-			valueList[i] = new Coin(value);
-		}
+		for(int i=0 ; i<amount ; i++ ) valueList[i] = new Coin(value);
 		return valueList;
 	}
 
