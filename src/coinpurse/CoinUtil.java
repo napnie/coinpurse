@@ -39,9 +39,9 @@ public class CoinUtil {
 	 *     that have the requested currency.  
 	 */
 	static <E extends Valuable> List<E> filterByCurrency(List<E> coinlist,String currency) {
+		if( currency == null || coinlist == null ) return null;
 		Predicate<E> currencyFilter = (valuable) -> valuable.getCurrency().equalsIgnoreCase(currency);
-		List<E> selCoins = coinlist.stream().filter( currencyFilter ).collect( Collectors.toList() );
-		return selCoins;
+		return coinlist.stream().filter( currencyFilter ).collect( Collectors.toList() );
 	}
 	
 	/**
