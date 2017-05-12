@@ -17,6 +17,18 @@ import java.util.Map;
 public class CoinUtil {
 	
 	/**
+	 * Return the larger of a and b, according to the natural
+	 * ordering (defined by compareTo).
+	 */
+	public static <E extends Comparable<E>> E max(E... a) {
+		E max = a[0] ;
+		for(int i =0 ; i<a.length ; i++) {
+			if( a[i].compareTo(max) > 0 ) max = a[i];
+		}
+		return max;
+	}
+	
+	/**
 	 * Method that examines all the coins in a List and returns
 	 * only the coins that have a currency that matches the parameter value.
 	 * @param coinlist is a List of Coin objects. This list is not modified.
@@ -24,9 +36,9 @@ public class CoinUtil {
 	 * @return a new List containing only the elements from coinlist
 	 *     that have the requested currency.  
 	 */
-	static List<Valuable> filterByCurrency(List<Valuable> coinlist,String currency) {
-		List<Valuable> selCoins = new ArrayList<Valuable>();
-		for (Valuable coin : coinlist){
+	static <E extends Valuable> List<E> filterByCurrency(List<E> coinlist,String currency) {
+		List<E> selCoins = new ArrayList<E>();
+		for (E coin : coinlist){
 			if ( coin.getCurrency().equals(currency) ) selCoins.add(coin);
 		}
 		return selCoins;
@@ -37,8 +49,8 @@ public class CoinUtil {
 	 * On return, the list (coins) will be ordered by currency.
 	 * @param coins is a List of Coin objects we want to sort. 
 	 */
-	static void sortByCurrency(List<Valuable> coins) {
-		Comparator<Valuable> byCurrency = new CompareByCurrency();
+	static <E extends Valuable> void sortByCurrency(List<E> coins) {
+		Comparator<E> byCurrency = new CompareByCurrency<E>();
 		Collections.sort(coins,byCurrency);
 	}
 	
@@ -141,7 +153,7 @@ public class CoinUtil {
  * @author Nitith Chayakul
  * @version 2017.02.11
  */
-class CompareByCurrency implements Comparator<Valuable> {
+class CompareByCurrency<T extends Valuable> implements Comparator<T> {
 	
 	/**
 	 * Compare the order of coin0 and coin1 by their currency.
@@ -150,7 +162,7 @@ class CompareByCurrency implements Comparator<Valuable> {
 	 * @return order between coin0 and coin1
 	 */
 	@Override
-	public int compare(Valuable value0, Valuable value1) {
+	public int compare(T value0, T value1) {
 		if ( value0 == null && value1 ==null ) return 0;
 		if ( value0 == null ) return -1;
 		if ( value1 == null ) return 1;
