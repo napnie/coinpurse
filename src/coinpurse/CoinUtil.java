@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * Some Coin utility methods for practice using Lists and Comparator.
@@ -37,10 +39,8 @@ public class CoinUtil {
 	 *     that have the requested currency.  
 	 */
 	static <E extends Valuable> List<E> filterByCurrency(List<E> coinlist,String currency) {
-		List<E> selCoins = new ArrayList<E>();
-		for (E coin : coinlist){
-			if ( coin.getCurrency().equals(currency) ) selCoins.add(coin);
-		}
+		Predicate<E> currencyFilter = (valuable) -> valuable.getCurrency().equalsIgnoreCase(currency);
+		List<E> selCoins = coinlist.stream().filter( currencyFilter ).collect( Collectors.toList() );
 		return selCoins;
 	}
 	
